@@ -1,0 +1,107 @@
+<configuration debug="info">
+    <contextName>#BS#</contextName>
+    <property resource="application.yml"></property>
+    <timestamp key="day" datePattern="yyyy-MM-dd"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/bs.log</file>
+       <encoder>
+            <pattern>%date %contextName %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+           <charset>UTF-8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${path}/bs.%d-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10240kb</maxFileSize>
+        </rollingPolicy>
+
+    </appender>
+
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/error.log</file>
+       <encoder>
+            <pattern>%date %contextName %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+           <charset>UTF-8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${path}/error.%d-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10240kb</maxFileSize>
+        </rollingPolicy>
+
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+   <!-- &lt;!&ndash; This is MDC value &ndash;&gt;
+    &lt;!&ndash; We will assign a value to 'logFileName' via Java code &ndash;&gt;
+    <appender name="FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>logFileName</key>
+            <defaultValue>logback</defaultValue>
+        </discriminator>
+        <sift>
+            &lt;!&ndash; A standard RollingFileAppender, the log file is based on 'logFileName' at runtime  &ndash;&gt;
+            <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>logs/${logFileName}.log</file>
+                <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                    <Pattern>
+                        %d{yyyy-MM-dd HH:mm:ss.SSS} %mdc [%thread] %-5level %logger{36} - %msg%n
+                    </Pattern>
+                </encoder>
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <FileNamePattern>logback.log.%i.bak</FileNamePattern>
+                    <MinIndex>1</MinIndex>
+                    <MaxIndex>12</MaxIndex>
+                </rollingPolicy>
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <MaxFileSize>100MB</MaxFileSize>
+                </triggeringPolicy>
+            </appender>
+        </sift>
+    </appender>-->
+
+    <logger name="com.bs.*" level="debug">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="c.b.e.*" level="debug">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <logger name="com.bs.*" level="debug">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="org.springframework.*" level="error">
+        <appender-ref ref="FILE_ERROR"/>
+    </logger>
+
+    <logger name="o.s.*" level="error">
+        <appender-ref ref="FILE_ERROR"/>
+    </logger>
+    <logger name="org.apache.*" level="error">
+        <appender-ref ref="FILE_ERROR"/>
+    </logger>
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </root>
+
+
+
+
+    <!--<define name="rootLevel" class="a.class.implementing.PropertyDefiner">
+        <shape>round</shape>
+        <color>brown</color>
+        <size>24</size>
+    </define>-->
+
+</configuration>

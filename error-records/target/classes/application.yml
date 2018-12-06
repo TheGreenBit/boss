@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  mvc:
+    static-path-pattern: "/**"
+dubbo:
+  consumer:
+    register: zookeeper://192.168.0.221:2181
+bs:
+  log:
+    path: logs

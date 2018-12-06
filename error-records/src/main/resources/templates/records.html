@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/layer/layer.js"></script>
+    <script type="text/javascript" src="/static/js/laydate.js"></script>
+    <script type="text/javascript" src="/static/bs/error_records.js"></script>
+    <meta charset="UTF-8"/>
+    <title>Insert title here</title>
+</head>
+<body>
+<label for="beginTime">开始时间:</label>
+<input id="beginTime" type="text"/>
+<label for="endTime">结束时间:</label>
+<input id="endTime" type="text"/>
+
+<input id="search" type="button" value="查询"/>
+
+<h2>错误列表</h2>
+<div id="error_list">
+
+    <ul>
+        <!--  <li  th:each="record:${records}">
+              <span th:text="${record.id}"></span>-
+              <span th:text="${record.name}"></span>-
+              <span th:text="${record.age}"></span>-
+              <span th:text="${record.address}"></span>
+          </li>-->
+    </ul>
+</div>
+</body>
+</html>
